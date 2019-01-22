@@ -1,0 +1,183 @@
+.setting_index{
+  margin: 30px;
+  height: 678px;
+}
+.setting_index_box{
+  margin:0 !important;
+}
+
+
+
+.setting_index_left{
+  height: 675px;
+  background-color: hsla(0,0%,100%,.9);
+  border-radius: 6px;
+  padding: 0 !important;
+}
+.setting_index_left input,.setting_index_left textarea{
+  margin: 10px auto;
+  display: block;
+  width: 85%;
+  outline:none;
+  resize:none;
+}
+.setting_index_left_btn{
+  text-align: center;
+  line-height: 50px;
+}
+
+
+
+
+.setting_index_right{
+  margin-left: 37px;
+  width: 67%;
+  padding: 0 !important;
+}
+.personalIndex_right_open_api{
+  background-color: hsla(0,0%,100%,.9);
+  border-radius: 6px;
+}
+.personalIndex_right_open_api .ivu-col-span-8 {
+  border-right: 1px dashed #d9d9d9;
+  line-height: 100px;
+  text-align: center;
+  font-size: 18px;
+}
+.personalIndex_right_open_api .ivu-col-span-16 {
+  padding: 10px;
+  padding-left: 30px;
+  line-height: 40px;
+  text-align: left;
+}
+.personalIndex_right_open_api .ivu-col-span-16 p {
+  text-align: left;
+  font-size: 15px;
+  color: #adbcd9;
+}
+.personalIndex_right_open_api .ivu-col-span-16 p span {
+  font-size: 12px;
+  background-color: #eee;
+  border-radius: 4px;
+  margin-left: 14px;
+  padding: 5px 15px;
+}
+
+/**
+最后部分
+ */
+.personalIndex_right_bg {
+  height: 532px;
+  margin-top: 40px;
+  background-color: hsla(0,0%,100%,.9);
+  border-radius: 6px;
+}
+.personalIndex_right_bg_img{
+  width: 100%;
+  height: 120px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.personalIndex_right_bg_list{
+  padding: 0 13px;
+}
+.personalIndex_right_bg_list_init{
+  margin-top: 10px;
+}
+.setting_index_list_page{
+  padding-top:23px;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  font-size: 12px;
+}
+
+
+
+
+
+
+
+.modalBG_center_modal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .ivu-modal{
+    top: 0;
+    width: auto !important;
+  }
+  .ivu-modal-body{
+    padding: 0;
+    width: 710px;
+    height: 500px;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .ivu-modal-footer{
+    display: none;
+  }
+  .modalBG_body{
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+  }
+  .personalIndex_modal_bg_msk {
+    background-color: hsla(0,0%,100%,.7);
+    width: 100%;
+    height: 100%;
+  }
+  .personalIndex_modal_bg_o{
+    padding-top: 50px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .personalIndex_modal_bg_b {
+    width: 500px;
+    height: 300px;
+    margin: auto;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .personalIndex_modal_bg_b img {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .personalIndex_modal_bg_button {
+    text-align: center;
+    padding: 0 0 20px;
+  }
+  .personalIndex_modal_bg_button p {
+    font-size: 15px;
+    color: #171717;
+    line-height: 46px;
+    text-align: center;
+  }
+  .personalIndex_modal_bg_button button{
+    padding: 4px 12px;
+  }
+  .personalIndex_modal_bg_button button:nth-child(2) {
+    margin-right: 10px;
+  }
+  .personalIndex_modal_bg_close {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin: auto;
+    border: 2px solid #fff;
+    color: #fff;
+    text-align: center;
+    line-height: 35px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+}
+.ivu-modal-mask{
+  background-color: rgba(55,55,55,.5);
+}
+
