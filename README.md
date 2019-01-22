@@ -1,8 +1,10 @@
 # 贝壳云笔记客户端
 
-> 一个基于 electron-vue 开发的云储存平台
+``` bash
 > 账号：Beatrice950201
 > 密码：Beatrice123
+
+```
 
 ##### 运行
 
