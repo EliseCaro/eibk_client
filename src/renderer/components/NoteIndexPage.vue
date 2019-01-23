@@ -173,7 +173,7 @@
       },
       init(page) {
         this._data.page = page;
-        this.$post('/api/note/index', {page: this._data.page}).then((response) => {
+        this.$post('/api/note/index', {page: this._data.page, kw: this.$route.query.kw || ''}).then((response) => {
           if (response.status === true) {
             this.$store.commit('note_update_list', response.data);
             this._data.header.token = response.data.token;

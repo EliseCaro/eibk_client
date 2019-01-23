@@ -118,7 +118,7 @@
     },
     methods: {
       init(page) {
-        this.$post('/api/file/index', {page: page || 1}).then((response) => {
+        this.$post('/api/file/index', {page: page || 1, kw: this.$route.query.kw || ''}).then((response) => {
           if (response.status === true) {
             this._data.up_parameters = {
               action: response.data.up_url,

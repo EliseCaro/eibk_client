@@ -205,6 +205,15 @@ end
   color: #00a988;
   outline:none !important;
 }
+.index_input .ivu-input:focus,.index_input .ivu-input:hover{
+  border: 0 !important;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+}
+.index_input .ivu-btn:focus,.index_input .ivu-btn:hover{
+  -webkit-box-shadow:none;
+  box-shadow:none;
+}
 .index_input .ivu-input-group-prepend{
   background: rgba(18,39,60,.5);
   border: 0;

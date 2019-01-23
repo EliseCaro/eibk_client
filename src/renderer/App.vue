@@ -153,13 +153,13 @@
                                 </div>
                             </div>
                             <div class="index_input">
-                                <i-input>
-                                    <i-select :model.sync="select1" slot="prepend" style="width: 80px">
+                                <i-input @on-enter="search_core" v-model="search_value">
+                                    <i-select v-model="select_default" slot="prepend" style="width: 80px">
                                         <i-option value="note">笔记</i-option>
                                         <i-option value="file">文件</i-option>
                                         <i-option value="video">视频</i-option>
                                     </i-select>
-                                    <i-button slot="append" icon="ios-search"></i-button>
+                                    <i-button @click.native="search_core" slot="append" icon="ios-search"></i-button>
                                 </i-input>
                             </div>
                             <div class="index_header_right">
@@ -213,7 +213,7 @@
 </template>
 
 <script>
-import {NoticeError, NoticeInfo, randomRange} from './tool/function';
+import { NoticeError, NoticeInfo, randomRange } from './tool/function';
 import '../../static/css/app.scss';
 export default {
   name: 'eibk',
@@ -229,10 +229,48 @@ export default {
       downloadList: [],
       background: this.$store.state.main.user.bg ? 'url(' + this.$store.state.main.user.bg + ')' : 'url(' + require('./assets/userbg.png') + ')',
       music_mini: false,
-      select1: 'note'
+      select_default: 'note',
+      search_value: ''
     }
   },
   methods: {
+    search_core() {
+      switch (this.select_default) {
+        case 'note':
+          if (this.$route.path === '/note/index') {
+            this.$post('/api/note/index', {page: 1, kw: this.search_value || ''}).then((response) => {
+              if (response.status === true) {
+                this.$store.commit('note_update_list', response.data);
+              }
+            });
+          } else {
+            this.$router.push({ path: '/note/index', query: {kw: this.search_value} });
+          }
+          break;
+        case 'file':
+          if (this.$route.path === '/file/index') {
+            this.$post('/api/file/index', {page: 1, kw: this.search_value || ''}).then((response) => {
+              if (response.status === true) {
+                this.$store.commit('file_update_list', response.data.data_list);
+              }
+            });
+          } else {
+            this.$router.push({ path: '/file/index', query: {kw: this.search_value} });
+          }
+          break;
+        case 'video':
+          if (this.$route.path === '/video/index') {
+            this.$post('/api/video/videoList', {page: 1, kw: this.search_value || ''}).then((response) => {
+              if (response.status === true) {
+                this.$store.commit('video_update_data', response.data);
+              }
+            });
+          } else {
+            this.$router.push({ path: '/video/index', query: {kw: this.search_value} });
+          }
+          break;
+      }
+    },
     userInfo() {
       this.$post('/api/personal/index', {}).then((response) => {
         if (response.status === true) {

@@ -78,7 +78,7 @@
     methods: {
       init(page) {
         let o = this;
-        this.$post('/api/video/videoList', {page: page || 1})
+        this.$post('/api/video/videoList', {page: page || 1, kw: this.$route.query.kw || ''})
           .then((response) => {
             if (response.status === true) {
               o.$store.commit('video_update_data', response.data);
