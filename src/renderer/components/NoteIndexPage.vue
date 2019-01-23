@@ -15,13 +15,16 @@
                         </Col>
                         <Col style="cursor: pointer" span="24">
 
-                            <Card v-for='v, k in $store.state.note.list.items' @click.native="note_info(v.id)" :bordered="false">
+                            <Card v-for='v, k in $store.state.note.list.items' :bordered="false">
                                 <div slot="title" class="note_left_int_title">
                                     <div class="note_left_int_title_text">{{v.title}}</div>
                                     <div class="note_left_int_title_icon">
                                         <div v-if="id == v.id" style="border: 1px solid #0eae81;color: #0eae81;"> <Icon type="edit"></Icon></div>
                                         <div v-else> <Icon type="edit"></Icon></div>
-                                        <div><Icon type="eye"></Icon></div>
+
+                                        <div @click="cg_status(v.id,0)" v-if="'1'== v.status" style="border: 1px solid #0eae81;color: #0eae81;"> <Icon type="eye"></Icon></div>
+                                        <div @click="cg_status(v.id,1)" v-else> <Icon type="eye"></Icon></div>
+
                                         <div><Icon @click.native="note_del(v.id)" type="trash-a"></Icon></div>
                                     </div>
                                 </div>
@@ -160,6 +163,34 @@
             });
           }
         });
+      },
+      cg_status(id, status) {
+        console.log(id, status);
+        if (status === 1) {
+          Modal.confirm({
+            title: '公开提示',
+            content: '<p>您确定要公开笔记吗？公开以后将所有人可预览。。。</p>',
+            loading: true,
+            onOk: () => {
+              this.$post('/api/note/status', {id: id, status: status}).then((response) => {
+                Modal.remove();
+                if (response.status === true) {
+                  this.init(this._data.page);
+                } else {
+                  NoticeWarning(response.msg);
+                }
+              });
+            }
+          });
+        } else {
+          this.$post('/api/note/status', {id: id, status: status}).then((response) => {
+            if (response.status === true) {
+              this.init(this._data.page);
+            } else {
+              NoticeWarning(response.msg);
+            }
+          });
+        }
       },
       save() {
         this.$post('/api/note/add', {id: this._data.id || '', text: this._data.content}).then((response) => {
