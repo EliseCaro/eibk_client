@@ -124,7 +124,7 @@
       },
       methods: {
         init() {
-          this.$post('/api/video/index', {})
+          this.$post('/video/index', {})
               .then((response) => {
                 if (response.status === true) {
                   this._data.up_config.format = response.data.up_config.file_accept;
@@ -141,7 +141,7 @@
           if (!data.file_id) { NoticeWarning('请上传视频。。。'); return false; }
           if (!data.title) { NoticeWarning('输入您的标题。。。'); return false; }
           if (!data.desc) { NoticeWarning('对你的视频描述点什么吧。。。'); return false; }
-          this.$post('/api/video/Push', data)
+          this.$post('/video/Push', data)
             .then((response) => {
               if (response.status === true) {
                 NoticeInfo('发布成功', '视频发布成功，后台正在处理，请稍等片刻！！！');

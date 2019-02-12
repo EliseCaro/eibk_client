@@ -18,9 +18,11 @@ axios.interceptors.request.use(
     config.headers = {
       'Content-Type': 'application/x-www-form-urlencoded'
     };
+    config.params = config.params || {};
     if (store.state.login.token) {
       config.params = {'token': store.state.login.token}
     }
+    config.params.is_client = 1;
     return config;
   }
 );

@@ -40,12 +40,12 @@
                     >
                         <template v-if="$store.state.images.list.items[1].child.length > 0">
                             <Carousel-item  v-for='vc, kc in $store.state.images.list.items[1].child' >
-                                <img class="rotateXz180" :src="$ProcessingPic(vc.path,'?imageMogr2/thumbnail/500x/gravity/Center/crop/400x400')"/>
+                                <img class="rotateXz180" :src="$ProcessingPic(vc.path,'?imageMogr2/thumbnail/600x/gravity/Center/crop/400x400')"/>
                             </Carousel-item>
                         </template>
                         <template v-else>
                             <Carousel-item>
-                                <img class="rotateXz180" :src="$ProcessingPic($store.state.images.list.items[1].path,'?imageMogr2/thumbnail/300x/gravity/Center/crop/200x200')"/>
+                                <img class="rotateXz180" :src="$ProcessingPic($store.state.images.list.items[1].path,'?imageMogr2/thumbnail/600x/gravity/Center/crop/400x400')"/>
                             </Carousel-item>
                         </template>
                     </Carousel>
@@ -61,7 +61,7 @@
 
 
                 <i-col @click.native="$router.push({ path: '/images/detail',query:{id:$store.state.images.list.items[3].id} })" v-if="$store.state.images.list.items.length > 3" class="pic-details-image-wrapper_init rotateXz90" span="6">
-                    <img class="rotateXz180" :src="$ProcessingPic($store.state.images.list.items[3].path,'?imageMogr2/thumbnail/300x/gravity/Center/crop/200x200')" />
+                    <img class="rotateXz180" :src="$ProcessingPic($store.state.images.list.items[3].path,'?imageMogr2/thumbnail/600x/gravity/Center/crop/400x400')" />
                 </i-col>
 
                 <i-col @click.native="$router.push({ path: '/images/detail',query:{id:$store.state.images.list.items[4].id} })" v-if="$store.state.images.list.items.length > 4" class="pic-details-image-wrapper_init" span="6">
@@ -98,12 +98,12 @@
                     >
                         <template v-if="$store.state.images.list.items[5].child.length > 0">
                             <Carousel-item  v-for='vc, kc in $store.state.images.list.items[5].child' >
-                                <img class="rotateXz180" :src="$ProcessingPic(vc.path,'?imageMogr2/thumbnail/500x/gravity/Center/crop/400x400')"/>
+                                <img class="rotateXz180" :src="$ProcessingPic(vc.path,'?imageMogr2/thumbnail/600x/gravity/Center/crop/400x400')"/>
                             </Carousel-item>
                         </template>
                         <template v-else>
                             <Carousel-item>
-                                <img class="rotateXz180" :src="$ProcessingPic($store.state.images.list.items[5].path,'?imageMogr2/thumbnail/500x/gravity/Center/crop/400x400')"/>
+                                <img class="rotateXz180" :src="$ProcessingPic($store.state.images.list.items[5].path,'?imageMogr2/thumbnail/600x/gravity/Center/crop/400x400')"/>
                             </Carousel-item>
                         </template>
 
@@ -183,7 +183,7 @@
     },
     methods: {
       init(page) {
-        this.$post('/api/photos/CoverList', {page: page || 1}).then((response) => {
+        this.$post('/photos/CoverList', {page: page || 1}).then((response) => {
           if (response.status === true) {
             this.up_parameters = {
               action: response.data.u_url,
@@ -197,7 +197,7 @@
         });
       },
       submit() {
-        this.$post('/api/photos/CoverAdd', this.up_input).then((response) => {
+        this.$post('/photos/CoverAdd', this.up_input).then((response) => {
           if (response.status === true) {
             NoticeInfo('添加成功', '相册添加成功！！！');
             this.init();
@@ -211,7 +211,7 @@
       OnSuccess(res) {
         if (res && res.ret === 'success') {
           this.up_input.file_id = res.file_id;
-          this.up_box_bg = 'url(' + this.$ProcessingPic(res.file_path, '?imageMogr2/thumbnail/300x/gravity/Center/crop/200x200') + ')';
+          this.up_box_bg = 'url(' + res.file_path + '?imageMogr2/thumbnail/300x/gravity/Center/crop/200x200)';
         }
       },
       OnError() { NoticeWarning('上传失败', '您的图片上传失败！请联系管理员或稍后再试！') },

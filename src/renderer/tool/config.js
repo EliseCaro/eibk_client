@@ -1,4 +1,4 @@
 export default {
-  host: 'http://api.yangyongfei.cn',
-  qiniuPath: 'http://pld55x5ga.bkt.clouddn.com/'
+  host: '',//服务端域名
+  qiniuPath: ''//七牛资源域名
 }

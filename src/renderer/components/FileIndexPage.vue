@@ -118,7 +118,7 @@
     },
     methods: {
       init(page) {
-        this.$post('/api/file/index', {page: page || 1, kw: this.$route.query.kw || ''}).then((response) => {
+        this.$post('/file/index', {page: page || 1, kw: this.$route.query.kw || ''}).then((response) => {
           if (response.status === true) {
             this._data.up_parameters = {
               action: response.data.up_url,
@@ -134,7 +134,7 @@
         });
       },
       submit() {
-        this.$post('/api/file/Save', this._data.up_input).then((response) => {
+        this.$post('/file/Save', this._data.up_input).then((response) => {
           if (response.status === true) {
             this.init();
             NoticeInfo('上传成功', '文件上传成功，后台正在处理，请稍等片刻！！！');
@@ -157,7 +157,7 @@
         this.edit_Box_modal = true;
       },
       edit_submit() {
-        this.$post('/api/file/SaveEditor', this.edit_input).then((response) => {
+        this.$post('/file/SaveEditor', this.edit_input).then((response) => {
           if (response.status === true) {
             this.edit_Box_modal = false;
             this.init();
@@ -173,7 +173,7 @@
           content: '<p>您确定要删除吗？删除以后将无法恢复。。。</p>',
           loading: true,
           onOk: () => {
-            this.$post('/api/file/Del', {id: id}).then((response) => {
+            this.$post('/file/Del', {id: id}).then((response) => {
               Modal.remove();
               if (response.status === true) {
                 this.init();

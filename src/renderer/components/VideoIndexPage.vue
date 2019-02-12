@@ -78,7 +78,7 @@
     methods: {
       init(page) {
         let o = this;
-        this.$post('/api/video/videoList', {page: page || 1, kw: this.$route.query.kw || ''})
+        this.$post('/video/videoList', {page: page || 1, kw: this.$route.query.kw || ''})
           .then((response) => {
             if (response.status === true) {
               o.$store.commit('video_update_data', response.data);
@@ -96,7 +96,7 @@
         this.edit_Box_modal = true;
       },
       edit_submit() {
-        this.$post('/api/video/Edit', this.edit_input).then((response) => {
+        this.$post('/video/Edit', this.edit_input).then((response) => {
           if (response.status === true) {
             NoticeInfo('视频编辑成功啦！！！');
             this.edit_Box_modal = false;
@@ -112,7 +112,7 @@
           content: '<p>您确定要删除吗？删除以后将无法恢复。。。</p>',
           loading: true,
           onOk: () => {
-            this.$post('/api/video/Del', {id: id}).then((response) => {
+            this.$post('/video/Del', {id: id}).then((response) => {
               Modal.remove();
               if (response.status === true) {
                 NoticeInfo('视频删除成功啦！！！');

@@ -238,7 +238,7 @@ export default {
       switch (this.select_default) {
         case 'note':
           if (this.$route.path === '/note/index') {
-            this.$post('/api/note/index', {page: 1, kw: this.search_value || ''}).then((response) => {
+            this.$post('/note/index', {page: 1, kw: this.search_value || ''}).then((response) => {
               if (response.status === true) {
                 this.$store.commit('note_update_list', response.data);
               }
@@ -249,7 +249,7 @@ export default {
           break;
         case 'file':
           if (this.$route.path === '/file/index') {
-            this.$post('/api/file/index', {page: 1, kw: this.search_value || ''}).then((response) => {
+            this.$post('/file/index', {page: 1, kw: this.search_value || ''}).then((response) => {
               if (response.status === true) {
                 this.$store.commit('file_update_list', response.data.data_list);
               }
@@ -260,7 +260,7 @@ export default {
           break;
         case 'video':
           if (this.$route.path === '/video/index') {
-            this.$post('/api/video/videoList', {page: 1, kw: this.search_value || ''}).then((response) => {
+            this.$post('/video/videoList', {page: 1, kw: this.search_value || ''}).then((response) => {
               if (response.status === true) {
                 this.$store.commit('video_update_data', response.data);
               }
@@ -272,7 +272,7 @@ export default {
       }
     },
     userInfo() {
-      this.$post('/api/personal/index', {}).then((response) => {
+      this.$post('/personal/index', {}).then((response) => {
         if (response.status === true) {
           this.$store.commit('main_update_user', response.data.userInfo);
           this._data.up_avatar.token = response.data.userInfo.avatar_up_token;
@@ -454,7 +454,7 @@ export default {
       this.jplayer_change_progress_handler(progress);
     },
     jplayer_music_post_plus(id) {
-      this.$post('/api/music/collect', {id: id}).then((response) => {
+      this.$post('/music/collect', {id: id}).then((response) => {
         if (response.status === true) {
           NoticeInfo(response.msg);
         } else {

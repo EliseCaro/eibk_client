@@ -49,7 +49,7 @@
     methods: {
       login() {
         let o = this;
-        this.$post('/api/sing/login', o._data._input)
+        this.$post('/sing/login', o._data._input)
         .then((response) => {
           if (response.status === true) {
             this.$store.commit('login_update_token', response.data.token);
@@ -62,12 +62,12 @@
       },
       onblur: function () {
         let o = this;
-        this.$post('/api/sing/getAvatar', {
+        this.$post('/sing/getAvatar', {
           username: o._data._input.username
         })
         .then((response) => {
           if (response.status === true) {
-            o.$store.commit('login_update_avatar', this.$ProcessingPic(response.data.avatar, ''));
+            o.$store.commit('login_update_avatar', response.data.avatar);
           } else {
             o.$store.commit('login_update_avatar', require('../assets/default_user.jpg'));
           }

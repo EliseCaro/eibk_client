@@ -96,11 +96,11 @@
                           <div class="index_comment">
                                <div v-for='v, k in $store.state.main.data.comment.items' class="index_comment_init">
                                    <div class="index_comment_init_avatar">
-                                       <img :src="$ProcessingPic(v.path,'?imageMogr2/gravity/Center/crop/200x200')">
+                                       <img style="width: 100%;height: 100%;" :src="$ProcessingPic(v.path,'')">
                                    </div>
                                    <div class="index_comment_init_right">
                                        <div class="index_comment_init_right_nickname">{{v.nickname}} <span> {{$formatDate(v.update_time,"Y-m-d")}} </span></div>
-                                       <p class="index_comment_init_right_content">{{v.content}}</p>
+                                       <p class="index_comment_init_right_content"  v-html="v.content"></p>
                                    </div>
                                </div>
                               <div class="index_comment_page">
@@ -130,7 +130,7 @@
       methods: {
         init(page) {
           let o = this;
-          this.$post('/api/index/index', {page: page || 1})
+          this.$post('/index/index', {page: page || 1})
             .then((response) => {
               if (response.status === true) {
                 o.$store.commit('main_update_data', response.data);

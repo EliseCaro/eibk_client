@@ -19,6 +19,7 @@
                     <i-input type="textarea" v-model="userInfo.sing" :rows="4" placeholder="请输入个性签名..."></i-input>
                     <div class="setting_index_left_btn">
                         <i-button @click.native="submit()" type="info">提交修改</i-button>
+                        <i-button style="margin-left: 15px" @click.native="quit()" type="warning">退出登录</i-button>
                     </div>
                 </i-col>
                 <i-col class="setting_index_right" span="17">
@@ -117,7 +118,7 @@
     },
     methods: {
       init(page) {
-        this.$post('/api/personal/index', {page: page || 1}).then((response) => {
+        this.$post('/personal/index', {page: page || 1}).then((response) => {
           if (response.status === true) {
             this.userInfo.nickname = response.data.userInfo.nickname;
             this.userInfo.email = response.data.userInfo.email;
@@ -131,7 +132,7 @@
         });
       },
       submit() {
-        this.$post('/api/personal/SaveUserInfo', this.userInfo).then((response) => {
+        this.$post('/personal/SaveUserInfo', this.userInfo).then((response) => {
           if (response.status === true) {
             NoticeInfo(response.msg);
             this.init();
@@ -140,6 +141,9 @@
           }
         })
       },
+      quit() {
+        this.$store.commit('login_update_token', '');
+      },
       browse_theme(k) {
         this.browse_theme_p = this.coverList.items[k];
         this.modalBG = true;
@@ -147,7 +151,7 @@
       theme_setting(url, isOk) {
         this.app.background = 'url(' + url + ')';
         if (isOk) {
-          this.$post('/api/personal/browseSave', {url: url}).then((response) => {
+          this.$post('/personal/browseSave', {url: url}).then((response) => {
             if (response.status === true) {
               this.init();
             } else {

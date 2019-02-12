@@ -162,7 +162,7 @@
           this.s_page = 2;
           return false;
         }
-        this.$post('/api/music/Search', {
+        this.$post('/music/Search', {
           kw: this.search_kw,
           type: false,
           s_page: page
@@ -180,12 +180,13 @@
         this.search_kw = v;
         if (!this.search_kw) return false;
         this.spinShow = true;
-        this.$post('/api/music/Search', {
+        this.$post('/music/Search', {
           kw: this.search_kw,
           type: true
         }).then((response) => {
           if (response.status === true) {
             if (response.data.length < 1) {
+              this.spinShow = false;
               NoticeWarning('没有结果', '您的输入没有搜索到任何结果，请尝试填写正确在次搜索！！');
             }
             this.$emit('jplayer_play_pause', 'pause')
@@ -199,7 +200,7 @@
         })
       },
       post_plus(id) {
-        this.$post('/api/music/collect', {id: id}).then((response) => {
+        this.$post('/music/collect', {id: id}).then((response) => {
           if (response.status === true) {
             NoticeInfo(response.msg);
             this.init();
@@ -209,7 +210,7 @@
         })
       },
       init(page) {
-        this.$post('/api/music/index', {page: page || 1}).then((response) => {
+        this.$post('/music/index', {page: page || 1}).then((response) => {
           if (response.status === true) {
             this.$store.commit('music_update_list', response.data._list);
             this.$store.commit('music_update_items', response.data._list.items);

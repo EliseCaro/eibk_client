@@ -49,7 +49,7 @@
         init(id) {
           if (!id) { return false; }
           let o = this;
-          this.$post('/api/video/videoDetails', {id: id})
+          this.$post('/video/videoDetails', {id: id})
             .then((response) => {
               if (response.status === true) {
                 o.$store.commit('video_update_detail', response.data);

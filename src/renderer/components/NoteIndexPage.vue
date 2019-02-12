@@ -20,7 +20,7 @@
                                     <div class="note_left_int_title_text">{{v.title}}</div>
                                     <div class="note_left_int_title_icon">
                                         <div v-if="id == v.id" style="border: 1px solid #0eae81;color: #0eae81;"> <Icon type="edit"></Icon></div>
-                                        <div v-else> <Icon type="edit"></Icon></div>
+                                        <div v-else> <Icon @click.native="note_info(v.id)" type="edit"></Icon></div>
 
                                         <div @click="cg_status(v.id,0)" v-if="'1'== v.status" style="border: 1px solid #0eae81;color: #0eae81;"> <Icon type="eye"></Icon></div>
                                         <div @click="cg_status(v.id,1)" v-else> <Icon type="eye"></Icon></div>
@@ -38,7 +38,7 @@
                             </Card>
 
                         </Col>
-                        <Col span="24" class="note_left_box_init">
+                        <Col span="24" style="border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;" class="note_left_box_init">
                             <Page class="note_left_page"
                                   simple
                                   :page-size="$store.state.note.list.limit"
@@ -136,7 +136,7 @@
     methods: {
       note_info(id) {
         this._data.id = id; this.init(this._data.page);
-        this.$post('/api/note/EditContent', {id: this._data.id}).then((response) => {
+        this.$post('/note/EditContent', {id: this._data.id}).then((response) => {
           if (response.status === true) {
             this._data.content = response.data.content;
           }
@@ -152,7 +152,7 @@
           content: '<p>您确定要删除吗？删除以后将无法恢复。。。</p>',
           loading: true,
           onOk: () => {
-            this.$post('/api/note/Del', {id: id}).then((response) => {
+            this.$post('/note/Del', {id: id}).then((response) => {
               Modal.remove();
               if (response.status === true) {
                 NoticeInfo('笔记删除成功！！');
@@ -172,7 +172,7 @@
             content: '<p>您确定要公开笔记吗？公开以后将所有人可预览。。。</p>',
             loading: true,
             onOk: () => {
-              this.$post('/api/note/status', {id: id, status: status}).then((response) => {
+              this.$post('/note/status', {id: id, status: status}).then((response) => {
                 Modal.remove();
                 if (response.status === true) {
                   this.init(this._data.page);
@@ -183,7 +183,7 @@
             }
           });
         } else {
-          this.$post('/api/note/status', {id: id, status: status}).then((response) => {
+          this.$post('/note/status', {id: id, status: status}).then((response) => {
             if (response.status === true) {
               this.init(this._data.page);
             } else {
@@ -193,7 +193,7 @@
         }
       },
       save() {
-        this.$post('/api/note/add', {id: this._data.id || '', text: this._data.content}).then((response) => {
+        this.$post('/note/add', {id: this._data.id || '', text: this._data.content}).then((response) => {
           if (response.status === true) {
             NoticeInfo('笔记保存成功！！');
             this.note_info(response.data.id);
@@ -204,7 +204,7 @@
       },
       init(page) {
         this._data.page = page;
-        this.$post('/api/note/index', {page: this._data.page, kw: this.$route.query.kw || ''}).then((response) => {
+        this.$post('/note/index', {page: this._data.page, kw: this.$route.query.kw || ''}).then((response) => {
           if (response.status === true) {
             this.$store.commit('note_update_list', response.data);
             this._data.header.token = response.data.token;

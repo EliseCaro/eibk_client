@@ -126,7 +126,7 @@
     },
     methods: {
       init(page) {
-        this.$post('/api/photos/GetData', {cid: this.cid, page: page || 1}).then((response) => {
+        this.$post('/photos/GetData', {cid: this.cid, page: page || 1}).then((response) => {
           if (response.status === true) {
             this.up_config = {
               action: response.data.up_url,
@@ -153,7 +153,7 @@
           content: '<p>您确定要删除吗？删除以后将无法恢复。。。</p>',
           loading: true,
           onOk: () => {
-            this.$post('/api/photos/delPhotos', {id: id}).then((response) => {
+            this.$post('/photos/delPhotos', {id: id}).then((response) => {
               Modal.remove();
               if (response.status === true) {
                 NoticeInfo('删除图片成功！！');
@@ -166,7 +166,7 @@
         });
       },
       settingImg(id) {
-        this.$post('/api/photos/settingPhotos', {id: id, cate: this.cid}).then((response) => {
+        this.$post('/photos/settingPhotos', {id: id, cate: this.cid}).then((response) => {
           if (response.status === true) {
             NoticeInfo('设置成功', '您的设置已经生效。。');
             this.init();
@@ -186,7 +186,7 @@
         this.edit_Images_Box_modal = true;
       },
       edit_submit() {
-        this.$post('/api/photos/EditCover', this.edit_input).then((response) => {
+        this.$post('/photos/EditCover', this.edit_input).then((response) => {
           if (response.status === true) {
             this.edit_Images_Box_modal = false;
             this.init();
@@ -197,7 +197,7 @@
         });
       },
       delete_images_box() {
-        this.$post('/api/photos/delCover', {id: this.cid}).then((response) => {
+        this.$post('/photos/delCover', {id: this.cid}).then((response) => {
           if (response.status === true) {
             NoticeInfo('删除成功！');
             this.$router.push({path: '/images/index'});
@@ -206,7 +206,7 @@
           }
         });
       },
-      get_backgurond(path, size) { return 'url(' + this.$ProcessingPic(path, size) + ')' },
+      get_backgurond(path, size) { return 'url(' + path + size + ')' },
       OnSuccess(res) { if (res && res.ret === 'success') { this.init(); } },
       OnError() { NoticeWarning('上传失败', '您的图片上传失败！请联系管理员或稍后再试！') }
     },
