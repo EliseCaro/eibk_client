@@ -23,6 +23,8 @@ Beatrice950201
 # 测试密码 
 Beatrice123
 
+#请自行配置src/renderer/tool/config.js；服务端代码近期开放
+
 ```
 
 ### UI
