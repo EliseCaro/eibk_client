@@ -99,8 +99,8 @@
                     <Layout :style="{background:'none'}">
                         <Header class="app_header">
 
-
-                            <div v-if="music_mini === true" class="music_mini">
+                            <template v-if="update_progress > 0">
+                                <div v-if="music_mini === true" style="margin-right: 88px" class="music_mini">
                                  <div class="music_mini_p">
                                      <Icon @click.native="jplayer_next('prev')" type="skip-backward"></Icon>
                                  </div>
@@ -152,6 +152,62 @@
                                     </div>
                                 </div>
                             </div>
+                            </template>
+                            <template v-else >
+                                <div v-if="music_mini === true" class="music_mini">
+                                    <div class="music_mini_p">
+                                        <Icon @click.native="jplayer_next('prev')" type="skip-backward"></Icon>
+                                    </div>
+                                    <i-circle
+                                            class="music_mini_p_cover"
+                                            :percent="100"
+                                            :stroke-width="4"
+                                            :trail-width="3"
+                                            :size="48"
+                                            stroke-color="#00a988"
+                                            trail-color="#fff"
+                                            :style="{backgroundImage:'url('+$ProcessingPic($store.state.music.item.cover)+')'}"
+                                    >
+                                        <template v-if="$store.state.music.play_status.is_play">
+                                            <Icon @click.native="jplayer_play_pause('pause')" type="pause"></Icon>
+                                        </template>
+                                        <template v-else >
+                                            <Icon @click.native="jplayer_play_pause('play')"  type="play"></Icon>
+                                        </template>
+                                    </i-circle>
+                                    <div class="music_mini_n">
+                                        <Icon @click.native="jplayer_next('next')" type="skip-forward"></Icon>
+                                    </div>
+                                    <div class="music_mini_p_right">
+                                        <marquee  class="music_mini_p_right_title">{{$store.state.music.item.title}} - {{$store.state.music.item.artist}}</marquee >
+                                        <div class="music_mini_p_right_progress">
+                                            <Progress
+                                                    :percent="100"
+                                                    @click.native="jplayer_change_progress_handler_child"
+                                                    hide-info
+                                                    :stroke-width="1"
+                                                    class="music_mini-high-progress"
+                                            ></Progress>
+                                        </div>
+                                        <div class="music_mini_p_right_icon">
+                                            <div class="music-volume-container">
+                                                <Icon type="volume-high"></Icon>
+                                                <Progress
+                                                        class="volume-high-progress"
+                                                        :percent="$store.state.music.play_status.volume"
+                                                        hide-info
+                                                        :stroke-width="3"
+                                                        @click.native="jplayer_change_volume_handler_child"
+                                                ></Progress>
+                                            </div>
+                                            <Icon @click.native="jplayer_music_post_plus($store.state.music.item.id)" type="ios-heart-outline"></Icon> <!--<Icon type="ios-heart"></Icon>-->
+                                            <Icon @click.native="jplayer_music_downlod($store.state.music.item.file,$store.state.music.item.title)" type="ios-cloud-download-outline"></Icon>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
                             <div class="index_input">
                                 <i-input @on-enter="search_core" v-model="search_value">
                                     <i-select v-model="select_default" slot="prepend" style="width: 80px">
@@ -162,6 +218,12 @@
                                     <i-button @click.native="search_core" slot="append" icon="ios-search"></i-button>
                                 </i-input>
                             </div>
+
+
+                            <div v-if="update_progress > 0" class="index_top_dow_icon">
+                                <Icon type="ios-cloud-download"></Icon> <span>{{update_progress}}%</span>
+                            </div>
+
                             <div class="index_header_right">
                                 <div @click="$electron.remote.getCurrentWindow().minimize()" class="index_header_right_mini">
                                     <Icon type="minus"></Icon>
@@ -231,7 +293,8 @@ export default {
       background: this.$store.state.main.user.bg ? 'url(' + this.$store.state.main.user.bg + ')' : 'url(' + require('./assets/userbg.png') + ')',
       music_mini: false,
       select_default: 'note',
-      search_value: ''
+      search_value: '',
+      update_progress: 10
     }
   },
   methods: {
@@ -370,6 +433,7 @@ export default {
       });
     },
     electron_update_init() {
+      const o = this;
       if (window.require) {
         this.$electron.ipcRenderer.send('checkForUpdate');
         this.$electron.ipcRenderer.on('update_message', (event, text) => {
@@ -388,6 +452,7 @@ export default {
           if (UpProgress === 100) {
             LoadingBar.finish();
           } else {
+            o._data.update_progress = UpProgress;
             LoadingBar.update(UpProgress)
           }
         });

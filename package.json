@@ -40,9 +40,9 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "artifactName": "贝壳云笔记.exe",
-      "shortcutName":"贝壳云笔记",
-      "uninstallDisplayName":"贝壳云笔记",
-      "perMachine":true
+      "shortcutName": "贝壳云笔记",
+      "uninstallDisplayName": "贝壳云笔记",
+      "perMachine": true
     },
     "publish": [
       {
