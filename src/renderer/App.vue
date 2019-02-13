@@ -294,7 +294,7 @@ export default {
       music_mini: false,
       select_default: 'note',
       search_value: '',
-      update_progress: 10
+      update_progress: 0
     }
   },
   methods: {
@@ -451,8 +451,9 @@ export default {
           let UpProgress = parseInt(progressObj.percent || 0);
           if (UpProgress === 100) {
             LoadingBar.finish();
+            o._data.update_progress = 0;
           } else {
-            o._data.update_progress = UpProgress;
+            o._data.update_progress = Math.ceil(UpProgress);
             LoadingBar.update(UpProgress)
           }
         });
