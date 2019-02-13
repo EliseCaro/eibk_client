@@ -1,0 +1,134 @@
+.note_left{
+
+}
+.note_left_box{
+  border-radius: 10px;
+  margin-right: 20px;
+  overflow: hidden;
+}
+.note_left_box_init{
+  background-color: hsla(0,0%,100%,.7);
+  position: relative;
+}
+.note_left_box_add_icon{
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  right: 0;
+  top: 0;
+  line-height: 44px;
+  text-align: center;
+  font-size: 21px;
+  cursor: pointer;
+}
+.note_left_box_desc_{
+  font-size: 11px;
+}
+.note_left_box_title{
+  line-height: 45px;
+  text-align: center;
+  margin-left: 20px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.note_left_box .ivu-card:first-child {
+  margin-top: 2px;
+}
+.note_left_box .ivu-card{
+  background: none;
+  background-color: hsla(0,0%,100%,.7);
+  padding: 6px 0;
+  border-radius: 0;
+  margin-bottom: 2px;
+  height: 8.85vw;
+  position: relative;
+}
+.note_left_box .ivu-card-head {
+  height: 25px;
+  line-height: 25px;
+  padding: 0 11px !important;
+  background: none;
+  /*border: 0;*/
+  font-size: 13px;
+  font-weight: bold;
+}
+.note_left_box .ivu-card-body{
+  padding: 5px 11px 0;
+}
+.note_left_box .ivu-card-body div .note_left_box_desc_:nth-child(1){
+  line-height: 18px;
+  font-size: 11px;
+}
+.note_left_box .ivu-card-body div p:nth-child(2){
+  line-height: 20px;
+  text-align: right;
+  position: absolute;
+  font-size: 13px;
+  width: 93%;
+  bottom: 3px;
+  font-weight: 100;
+}
+.note_left_page{
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+  margin-left: 0;
+  line-height: 2.8vw;
+  padding: 1vw 0;
+}
+.note_left_int_title{
+  position: relative;
+}
+.note_left_int_title_text{
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  width: 71%;
+}
+.note_left_int_title_icon{
+  position: absolute;
+  right: 0;
+  top: 2px;
+  overflow: hidden;
+}
+.note_left_int_title_icon div{
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border:1px solid #aaa;
+  float: left;
+  line-height: 20px;
+  text-align: center;
+  margin-right: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #aaa;
+}
+.note_left_int_title_icon div:nth-last-child(1){
+  margin-right: 0;
+}
+.note_left_int_title_icon div:nth-last-child(2){
+  font-size: 14px;
+}
+.note_left_int_title_icon div:nth-last-child(3){
+ font-size: 11px;
+}
+/**
+右边部分
+ */
+.ql-toolbar{
+  padding: 9.5px;
+  border-bottom: none;
+  background-color: hsla(0,0%,100%,.7);
+  border-radius: 10px;
+}
+.ql-container{
+  background-color: hsla(0,0%,100%,.7);
+  border: 0;
+  border-radius: 10px;
+  margin-top: 10px;
+  height: 608px;
+}
+.edit_upload_img {
+  display: none;
+}
