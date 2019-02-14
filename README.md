@@ -17,17 +17,20 @@ npm run dev
 # 打包安装文件 
 npm run build
 
-#测试：
+#请自行配置src/renderer/tool/config.js；服务端代码近期开放
+
+```
+
+##### 体验
+
+``` bash
 #已经打包的安装包下载地址：http://bkybj.com;
+
 #请勿删除内容
 
-# 测试账号
-test
+# 测试账号：test
 
-# 测试密码 
-test123
-
-#请自行配置src/renderer/tool/config.js；服务端代码近期开放
+# 测试密码：test123
 
 ```
 
