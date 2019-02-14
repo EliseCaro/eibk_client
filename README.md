@@ -18,7 +18,8 @@ npm run dev
 npm run build
 
 #测试：
-#已经打包的安装包下载地址：http://bkybj.com/client/exe/贝壳云笔记.exe;请勿删除内容
+#已经打包的安装包下载地址：http://bkybj.com;
+#请勿删除内容
 
 # 测试账号
 test
