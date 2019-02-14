@@ -13,12 +13,9 @@
                     <Row class="app_left_top">
                         <Col @click.native="$router.back(-1)" class="app_left_top_init" span="6"><Avatar icon="android-arrow-back" size="large" /></Col>
                         <Col @click.native="isCollapsed = !isCollapsed" class="app_left_top_init" span="6">
-                            <template v-if="isCollapsed">
-                                <Avatar :style="{'background':'#2d8cf0'}" icon="arrow-down-a" size="large" />
-                            </template>
-                            <template v-else>
+                            <Badge :count="downloadList.length">
                                 <Avatar icon="arrow-down-a" size="large" />
-                            </template>
+                            </Badge>
                         </Col>
                         <Col @click.native="isCollapsed = !isCollapsed" class="app_left_top_init" span="6">
                             <Avatar icon="chatboxes" size="large" />

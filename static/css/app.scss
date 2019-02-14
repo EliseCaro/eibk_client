@@ -5,6 +5,12 @@
   background-repeat: no-repeat;
   font-family: "PingFang SC","Hiragino Sans GB","Helvetica Neue",Helvetica,"Microsoft YaHei","微软雅黑",Arial,sans-serif;
 }
+*{
+  -moz-user-select: none; /*mozilar*/
+  -webkit-user-select: none; /*webkit*/
+  -ms-user-select: none; /*IE*/
+  user-select: none;
+}
 .ivu-loading-bar{
  /* top: 63px;*/
 }
