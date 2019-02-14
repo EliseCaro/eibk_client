@@ -494,6 +494,8 @@ export default {
       }).jPlayer('play');
       this.$store.commit('music_update_item', item);
       this.$store.commit('music_update_is_play', true);
+      this.background = 'url(' + this.$ProcessingPic(item.cover, '?imageMogr2/thumbnail/1280x/gravity/Center/crop/200x200/blur/20x10') + ')';
+      console.log(this.background);
     },
     jplayer_next(type = 'next') {
       let index = this.jplayer_find_music_index(this.$store.state.music.item);
@@ -558,7 +560,7 @@ export default {
       this.electron_dowload_insertDb(url);
     },
     routeCg() {
-      if (this.$route.path != '/video/detail' && this.$route.path != '/setting/index') {
+      if (this.$route.path != '/video/detail' && this.$route.path != '/setting/index' && this.$store.state.music.play_status.is_play != true) {
         let bg = this.$store.state.main.user.bg ? this.$store.state.main.user.bg : require('./assets/userbg.png');
         this.background = 'url(' + bg + ')';
       }
