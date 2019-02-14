@@ -17,11 +17,14 @@ npm run dev
 # 打包安装文件 
 npm run build
 
+#测试：
+#已经打包的安装包下载地址：http://bkybj.com/client/exe/贝壳云笔记.exe;请勿删除内容
+
 # 测试账号
-Beatrice950201
+test
 
 # 测试密码 
-Beatrice123
+test123
 
 #请自行配置src/renderer/tool/config.js；服务端代码近期开放
 
