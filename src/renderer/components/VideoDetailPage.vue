@@ -72,7 +72,7 @@
                     fullscreenToggle: true  // 全屏按钮
                   }
                 };
-                this.app.background = 'url(' + ProcessingPic(o.$store.state.video.detail.info.thumb, '?imageMogr2/blur/20x10') + ')';
+                this.$emit('change_background', 'url(' + ProcessingPic(o.$store.state.video.detail.info.thumb, '?imageMogr2/blur/20x10') + ')');
               }
             });
         },

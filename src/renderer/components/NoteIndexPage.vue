@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <p class="note_left_box_desc_">{{v.descriptions}}</p>
+                                    <p @click="note_info(v.id)" class="note_left_box_desc_">{{v.descriptions}}</p>
                                     <p>
                                         <Icon type="calendar"></Icon>
                                         <span>{{$formatDate(v.update_time,"Y-m-d")}}</span>

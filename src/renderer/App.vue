@@ -1,160 +1,111 @@
 <template>
-    <div :style="{backgroundImage: background}" :ks="background" id="app">
-        <template v-if="$store.state.login.token === ''">
-            <router-view
-                    v-bind:app="this"
-                    @userInfo="userInfo"
-                    @jplayer_play_pause="jplayer_play_pause"
-            ></router-view>
-        </template>
-        <template v-else>
-            <Row>
-                <Col class="app_left" span="5">
-                    <Row class="app_left_top">
-                        <Col @click.native="$router.back(-1)" class="app_left_top_init" span="6"><Avatar icon="android-arrow-back" size="large" /></Col>
-                        <Col @click.native="isCollapsed = !isCollapsed" class="app_left_top_init" span="6">
-                            <Badge :count="downloadList.length">
-                                <Avatar icon="arrow-down-a" size="large" />
-                            </Badge>
-                        </Col>
-                        <Col @click.native="isCollapsed = !isCollapsed" class="app_left_top_init" span="6">
-                            <Avatar icon="chatboxes" size="large" />
-                        </Col>
-                        <Col @click.native="$router.push({ path: '/setting/index' })" class="app_left_top_init" span="6">
-                            <Avatar icon="ios-gear" size="large" />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col span="24">
-                            <div class="app_avatar_box">
-                                <Upload
-                                        :action="up_avatar.up_url"
-                                        :data="up_avatar"
-                                        :multiple="false"
-                                        :paste="false"
-                                        :show-upload-list="false"
-                                        type="select"
-                                        :format="up_avatar.format"
-                                        :before-upload="beforeUpload"
-                                        :on-success="uploadSuccess"
-                                        :on-error="uploadError"
-                                        class="up_upload_avatar_obj"
-                                >
-                                    <Avatar :src="$ProcessingPic($store.state.main.user.avatar,'')" />
-                                </Upload>
-                                <div class="app_avatar_box_nickname">{{$store.state.main.user.nickname}}</div>
-                            </div>
-                            <Menu class="app_menu_box" :style="{width:'100%',color: '#ffffff'}" :theme="theme2" active-name="1-1" :open-names="['1']" accordion>
-
-                                <Submenu name="1">
-                                    <template slot="title">
-                                        <Icon type="ios-paper"></Icon>
-                                        控制面板
-                                    </template>
-                                    <MenuItem @click.native="$router.push({ path: '/'})" name="1-1">我的主页</MenuItem>
-                                </Submenu>
-
-                                <Submenu name="2">
-                                    <template slot="title">
-                                        <Icon type="ios-paper"></Icon>
-                                        视频管理
-                                    </template>
-                                    <MenuItem @click.native="$router.push({ path: '/video/push'})" name="1-1">发布视频</MenuItem>
-                                    <MenuItem @click.native="$router.push({ path: '/video/index'})" name="1-2">全部视频</MenuItem>
-                                </Submenu>
-
-                                <Submenu name="3">
-                                    <template slot="title">
-                                        <Icon type="ios-paper"></Icon>
-                                        我的笔记
-                                    </template>
-                                    <MenuItem name="1-1" @click.native="$router.push({ path: '/note/index'})">最新笔记</MenuItem>
-                                    <MenuItem name="1-2" @click.native="$router.push({ path: '/file/index'})">文件管理</MenuItem>
-                                </Submenu>
-
-                                <Submenu name="4">
-                                    <template slot="title">
-                                        <Icon type="ios-paper"></Icon>
-                                        图集管理
-                                    </template>
-                                    <MenuItem @click.native="$router.push({ path: '/images/index'})" name="1-1">我的图集</MenuItem>
-                                </Submenu>
-
-                                <Submenu name="5">
-                                    <template slot="title">
-                                        <Icon type="ios-paper"></Icon>
-                                        音乐频道
-                                    </template>
-                                    <MenuItem @click.native="$router.push({ path: '/music/index'})" name="1-1">我的收藏</MenuItem>
-                                </Submenu>
-
-                            </Menu>
-                        </Col>
-                    </Row>
-                </Col>
-                <Col :style="{'width':'auto'}" span="19">
-                    <Layout :style="{background:'none'}">
-                        <Header class="app_header">
-
-                            <template v-if="update_progress > 0">
-                                <div v-if="music_mini === true" style="margin-right: 88px" class="music_mini">
-                                 <div class="music_mini_p">
-                                     <Icon @click.native="jplayer_next('prev')" type="skip-backward"></Icon>
-                                 </div>
-                                <i-circle
-                                        class="music_mini_p_cover"
-                                        :percent="100"
-                                        :stroke-width="4"
-                                        :trail-width="3"
-                                        :size="48"
-                                        stroke-color="#00a988"
-                                        trail-color="#fff"
-                                        :style="{backgroundImage:'url('+$ProcessingPic($store.state.music.item.cover)+')'}"
-                                >
-                                    <template v-if="$store.state.music.play_status.is_play">
-                                        <Icon @click.native="jplayer_play_pause('pause')" type="pause"></Icon>
-                                    </template>
-                                    <template v-else >
-                                        <Icon @click.native="jplayer_play_pause('play')"  type="play"></Icon>
-                                    </template>
-                                </i-circle>
-                                 <div class="music_mini_n">
-                                     <Icon @click.native="jplayer_next('next')" type="skip-forward"></Icon>
-                                 </div>
-                                <div class="music_mini_p_right">
-                                     <marquee  class="music_mini_p_right_title">{{$store.state.music.item.title}} - {{$store.state.music.item.artist}}</marquee >
-                                    <div class="music_mini_p_right_progress">
-                                        <Progress
-                                                :percent="100"
-                                                @click.native="jplayer_change_progress_handler_child"
-                                                hide-info
-                                                :stroke-width="1"
-                                                class="music_mini-high-progress"
-                                        ></Progress>
-                                    </div>
-                                    <div class="music_mini_p_right_icon">
-                                        <div class="music-volume-container">
-                                            <Icon type="volume-high"></Icon>
-                                            <Progress
-                                                    class="volume-high-progress"
-                                                    :percent="$store.state.music.play_status.volume"
-                                                    hide-info
-                                                    :stroke-width="3"
-                                                    @click.native="jplayer_change_volume_handler_child"
-                                            ></Progress>
-                                        </div>
-                                        <Icon @click.native="jplayer_music_post_plus($store.state.music.item.id)" type="ios-heart-outline"></Icon> <!--<Icon type="ios-heart"></Icon>-->
-                                        <Icon @click.native="jplayer_music_downlod($store.state.music.item.file,$store.state.music.item.title)" type="ios-cloud-download-outline"></Icon>
-
-                                    </div>
+        <div id="app">
+            <template>
+                <transition name="fade">
+                    <div v-if="bgShow" :style="{backgroundImage: background}" class="app_bg"></div>
+                </transition>
+            </template>
+            <template v-if="$store.state.login.token === ''">
+                <router-view
+                        v-bind:app="this"
+                        @userInfo="userInfo"
+                        @jplayer_play_pause="jplayer_play_pause"
+                ></router-view>
+            </template>
+            <template v-else>
+                <Row>
+                    <Col class="app_left" span="5">
+                        <Row class="app_left_top">
+                            <Col @click.native="$router.back(-1)" class="app_left_top_init" span="6"><Avatar icon="android-arrow-back" size="large" /></Col>
+                            <Col @click.native="isCollapsed = !isCollapsed" class="app_left_top_init" span="6">
+                                <Badge :count="downloadList.length">
+                                    <Avatar icon="arrow-down-a" size="large" />
+                                </Badge>
+                            </Col>
+                            <Col @click.native="isCollapsed = !isCollapsed" class="app_left_top_init" span="6">
+                                <Avatar icon="chatboxes" size="large" />
+                            </Col>
+                            <Col @click.native="$router.push({ path: '/setting/index' })" class="app_left_top_init" span="6">
+                                <Avatar icon="ios-gear" size="large" />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span="24">
+                                <div class="app_avatar_box">
+                                    <Upload
+                                            :action="up_avatar.up_url"
+                                            :data="up_avatar"
+                                            :multiple="false"
+                                            :paste="false"
+                                            :show-upload-list="false"
+                                            type="select"
+                                            :format="up_avatar.format"
+                                            :before-upload="beforeUpload"
+                                            :on-success="uploadSuccess"
+                                            :on-error="uploadError"
+                                            class="up_upload_avatar_obj"
+                                    >
+                                        <Avatar :src="$ProcessingPic($store.state.main.user.avatar,'')" />
+                                    </Upload>
+                                    <div class="app_avatar_box_nickname">{{$store.state.main.user.nickname}}</div>
                                 </div>
-                            </div>
-                            </template>
-                            <template v-else >
-                                <div v-if="music_mini === true" class="music_mini">
-                                    <div class="music_mini_p">
-                                        <Icon @click.native="jplayer_next('prev')" type="skip-backward"></Icon>
-                                    </div>
+                                <Menu class="app_menu_box" :style="{width:'100%',color: '#ffffff'}" :theme="theme2" active-name="1-1" :open-names="['1']" accordion>
+
+                                    <Submenu name="1">
+                                        <template slot="title">
+                                            <Icon type="ios-paper"></Icon>
+                                            控制面板
+                                        </template>
+                                        <MenuItem @click.native="$router.push({ path: '/'})" name="1-1">我的主页</MenuItem>
+                                    </Submenu>
+
+                                    <Submenu name="2">
+                                        <template slot="title">
+                                            <Icon type="ios-paper"></Icon>
+                                            视频管理
+                                        </template>
+                                        <MenuItem @click.native="$router.push({ path: '/video/push'})" name="1-1">发布视频</MenuItem>
+                                        <MenuItem @click.native="$router.push({ path: '/video/index'})" name="1-2">全部视频</MenuItem>
+                                    </Submenu>
+
+                                    <Submenu name="3">
+                                        <template slot="title">
+                                            <Icon type="ios-paper"></Icon>
+                                            我的笔记
+                                        </template>
+                                        <MenuItem name="1-1" @click.native="$router.push({ path: '/note/index'})">最新笔记</MenuItem>
+                                        <MenuItem name="1-2" @click.native="$router.push({ path: '/file/index'})">文件管理</MenuItem>
+                                    </Submenu>
+
+                                    <Submenu name="4">
+                                        <template slot="title">
+                                            <Icon type="ios-paper"></Icon>
+                                            图集管理
+                                        </template>
+                                        <MenuItem @click.native="$router.push({ path: '/images/index'})" name="1-1">我的图集</MenuItem>
+                                    </Submenu>
+
+                                    <Submenu name="5">
+                                        <template slot="title">
+                                            <Icon type="ios-paper"></Icon>
+                                            音乐频道
+                                        </template>
+                                        <MenuItem @click.native="$router.push({ path: '/music/index'})" name="1-1">我的收藏</MenuItem>
+                                    </Submenu>
+
+                                </Menu>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col :style="{'width':'auto'}" span="19">
+                        <Layout :style="{background:'none'}">
+                            <Header class="app_header">
+
+                                <template v-if="update_progress > 0">
+                                    <div v-if="music_mini === true" style="margin-right: 88px" class="music_mini">
+                                     <div class="music_mini_p">
+                                         <Icon @click.native="jplayer_next('prev')" type="skip-backward"></Icon>
+                                     </div>
                                     <i-circle
                                             class="music_mini_p_cover"
                                             :percent="100"
@@ -172,11 +123,11 @@
                                             <Icon @click.native="jplayer_play_pause('play')"  type="play"></Icon>
                                         </template>
                                     </i-circle>
-                                    <div class="music_mini_n">
-                                        <Icon @click.native="jplayer_next('next')" type="skip-forward"></Icon>
-                                    </div>
+                                     <div class="music_mini_n">
+                                         <Icon @click.native="jplayer_next('next')" type="skip-forward"></Icon>
+                                     </div>
                                     <div class="music_mini_p_right">
-                                        <marquee  class="music_mini_p_right_title">{{$store.state.music.item.title}} - {{$store.state.music.item.artist}}</marquee >
+                                         <marquee  class="music_mini_p_right_title">{{$store.state.music.item.title}} - {{$store.state.music.item.artist}}</marquee >
                                         <div class="music_mini_p_right_progress">
                                             <Progress
                                                     :percent="100"
@@ -203,72 +154,127 @@
                                         </div>
                                     </div>
                                 </div>
-                            </template>
+                                </template>
+                                <template v-else >
+                                    <div v-if="music_mini === true" class="music_mini">
+                                        <div class="music_mini_p">
+                                            <Icon @click.native="jplayer_next('prev')" type="skip-backward"></Icon>
+                                        </div>
+                                        <i-circle
+                                                class="music_mini_p_cover"
+                                                :percent="100"
+                                                :stroke-width="4"
+                                                :trail-width="3"
+                                                :size="48"
+                                                stroke-color="#00a988"
+                                                trail-color="#fff"
+                                                :style="{backgroundImage:'url('+$ProcessingPic($store.state.music.item.cover)+')'}"
+                                        >
+                                            <template v-if="$store.state.music.play_status.is_play">
+                                                <Icon @click.native="jplayer_play_pause('pause')" type="pause"></Icon>
+                                            </template>
+                                            <template v-else >
+                                                <Icon @click.native="jplayer_play_pause('play')"  type="play"></Icon>
+                                            </template>
+                                        </i-circle>
+                                        <div class="music_mini_n">
+                                            <Icon @click.native="jplayer_next('next')" type="skip-forward"></Icon>
+                                        </div>
+                                        <div class="music_mini_p_right">
+                                            <marquee  class="music_mini_p_right_title">{{$store.state.music.item.title}} - {{$store.state.music.item.artist}}</marquee >
+                                            <div class="music_mini_p_right_progress">
+                                                <Progress
+                                                        :percent="100"
+                                                        @click.native="jplayer_change_progress_handler_child"
+                                                        hide-info
+                                                        :stroke-width="1"
+                                                        class="music_mini-high-progress"
+                                                ></Progress>
+                                            </div>
+                                            <div class="music_mini_p_right_icon">
+                                                <div class="music-volume-container">
+                                                    <Icon type="volume-high"></Icon>
+                                                    <Progress
+                                                            class="volume-high-progress"
+                                                            :percent="$store.state.music.play_status.volume"
+                                                            hide-info
+                                                            :stroke-width="3"
+                                                            @click.native="jplayer_change_volume_handler_child"
+                                                    ></Progress>
+                                                </div>
+                                                <Icon @click.native="jplayer_music_post_plus($store.state.music.item.id)" type="ios-heart-outline"></Icon> <!--<Icon type="ios-heart"></Icon>-->
+                                                <Icon @click.native="jplayer_music_downlod($store.state.music.item.file,$store.state.music.item.title)" type="ios-cloud-download-outline"></Icon>
 
-                            <div class="index_input">
-                                <i-input @on-enter="search_core" v-model="search_value">
-                                    <i-select v-model="select_default" slot="prepend" style="width: 80px">
-                                        <i-option value="note">笔记</i-option>
-                                        <i-option value="file">文件</i-option>
-                                        <i-option value="video">视频</i-option>
-                                    </i-select>
-                                    <i-button @click.native="search_core" slot="append" icon="ios-search"></i-button>
-                                </i-input>
-                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
 
-
-                            <div v-if="update_progress > 0" class="index_top_dow_icon">
-                                <Icon type="ios-cloud-download"></Icon> <span>{{update_progress}}%</span>
-                            </div>
-
-                            <div class="index_header_right">
-                                <div @click="$electron.remote.getCurrentWindow().minimize()" class="index_header_right_mini">
-                                    <Icon type="minus"></Icon>
+                                <div class="index_input">
+                                    <i-input @on-enter="search_core" v-model="search_value">
+                                        <i-select v-model="select_default" slot="prepend" style="width: 80px">
+                                            <i-option value="note">笔记</i-option>
+                                            <i-option value="file">文件</i-option>
+                                            <i-option value="video">视频</i-option>
+                                        </i-select>
+                                        <i-button @click.native="search_core" slot="append" icon="ios-search"></i-button>
+                                    </i-input>
                                 </div>
-                                <div @click="$electron.remote.getCurrentWindow().close()" class="index_header_right_close">
-                                    <Icon type="close"></Icon>
-                                </div>
-                            </div>
-                        </Header>
-                        <Layout :style="{'width':'1040px','background':'none'}">
-                            <Content class="app_content">
-                                <router-view
-                                        v-bind:app="this"
-                                        @electron_dowload_insertDb="electron_dowload_insertDb"
-                                        @jplayer_start="jplayer_start"
-                                        @jplayer_next="jplayer_next"
-                                        @jplayer_play_pause="jplayer_play_pause"
-                                        @jplayer_change_repeat="jplayer_change_repeat"
-                                        @jplayer_change_volume_handler="jplayer_change_volume_handler"
-                                        @jplayer_change_progress_handler="jplayer_change_progress_handler"
-                                ></router-view>
-                            </Content>
-                            <transition name="slide-fade">
-                                <Sider v-if="isCollapsed" :style="{width:'231px','max-width':'231px',flex: '0 0 231px'}" class="app_right">
-                                    <Tabs class="app_right_tables" type="card">
-                                        <TabPane label="下载">
 
-                                             <div v-for='v, k in downloadList' class="app_right_tables_dow_init">
-                                                 <p class="app_right_tables_dow_init_text">{{v.name}}</p>
-                                                 <div class="app_right_tables_dow_init_i">
-                                                     <Icon v-if="v.save_path" @click.native="open_foledr(v.save_path)" style="font-size: 20px;" type="ios-navigate-outline"></Icon>
-                                                     <Icon v-else style="font-size: 20px;" type="android-arrow-dropright-circle"></Icon>
-                                                     <Icon @click.native="delete_download(v._id)" style="font-size: 20px;" type="ios-close-outline"></Icon>
+
+                                <div v-if="update_progress > 0" class="index_top_dow_icon">
+                                    <Icon type="ios-cloud-download"></Icon> <span>{{update_progress}}%</span>
+                                </div>
+
+                                <div class="index_header_right">
+                                    <div @click="$electron.remote.getCurrentWindow().minimize()" class="index_header_right_mini">
+                                        <Icon type="minus"></Icon>
+                                    </div>
+                                    <div @click="$electron.remote.getCurrentWindow().close()" class="index_header_right_close">
+                                        <Icon type="close"></Icon>
+                                    </div>
+                                </div>
+                            </Header>
+                            <Layout :style="{'width':'1040px','background':'none'}">
+                                <Content class="app_content">
+                                    <router-view
+                                            v-bind:app="this"
+                                            @electron_dowload_insertDb="electron_dowload_insertDb"
+                                            @change_background="change_background"
+                                            @jplayer_start="jplayer_start"
+                                            @jplayer_next="jplayer_next"
+                                            @jplayer_play_pause="jplayer_play_pause"
+                                            @jplayer_change_repeat="jplayer_change_repeat"
+                                            @jplayer_change_volume_handler="jplayer_change_volume_handler"
+                                            @jplayer_change_progress_handler="jplayer_change_progress_handler"
+                                    ></router-view>
+                                </Content>
+                                <transition name="slide-fade">
+                                    <Sider v-if="isCollapsed" :style="{width:'231px','max-width':'231px',flex: '0 0 231px'}" class="app_right">
+                                        <Tabs class="app_right_tables" type="card">
+                                            <TabPane label="下载">
+
+                                                 <div v-for='v, k in downloadList' class="app_right_tables_dow_init">
+                                                     <p class="app_right_tables_dow_init_text">{{v.name}}</p>
+                                                     <div class="app_right_tables_dow_init_i">
+                                                         <Icon v-if="v.save_path" @click.native="open_foledr(v.save_path)" style="font-size: 20px;" type="ios-navigate-outline"></Icon>
+                                                         <Icon v-else style="font-size: 20px;" type="android-arrow-dropright-circle"></Icon>
+                                                         <Icon @click.native="delete_download(v._id)" style="font-size: 20px;" type="ios-close-outline"></Icon>
+                                                     </div>
+                                                     <Progress :percent="v.percentage" :stroke-width="2" hide-info />
                                                  </div>
-                                                 <Progress :percent="v.percentage" :stroke-width="2" hide-info />
-                                             </div>
 
-                                        </TabPane>
-                                        <TabPane label="消息"><!--标签二的内容--></TabPane>
-                                    </Tabs>
-                                </Sider>
-                            </transition>
+                                            </TabPane>
+                                            <TabPane label="消息"><!--标签二的内容--></TabPane>
+                                        </Tabs>
+                                    </Sider>
+                                </transition>
+                            </Layout>
                         </Layout>
-                    </Layout>
-                </Col>
-            </Row>
-        </template>
-    </div>
+                    </Col>
+                </Row>
+            </template>
+        </div>
 </template>
 
 <script>
@@ -281,6 +287,7 @@ export default {
     return {
       theme2: 'light',
       isCollapsed: false,
+      bgShow: true,
       up_avatar: {
         token: '',
         up_url: '',
@@ -295,6 +302,12 @@ export default {
     }
   },
   methods: {
+    change_background(urlStr) {
+      const o = this;
+      this.bgShow = false;
+      this.background = urlStr;
+      setTimeout(function () { o.bgShow = true }, 1000);
+    },
     search_core() {
       switch (this.select_default) {
         case 'note':
@@ -494,8 +507,8 @@ export default {
       }).jPlayer('play');
       this.$store.commit('music_update_item', item);
       this.$store.commit('music_update_is_play', true);
-      this.background = 'url(' + this.$ProcessingPic(item.cover, '?imageMogr2/thumbnail/1280x/gravity/Center/crop/200x200/blur/20x10') + ')';
-      console.log(this.background);
+      const background = 'url(' + this.$ProcessingPic(item.cover, '?imageMogr2/thumbnail/1280x/gravity/Center/crop/200x200/blur/20x10') + ')';
+      this.change_background(background);
     },
     jplayer_next(type = 'next') {
       let index = this.jplayer_find_music_index(this.$store.state.music.item);
