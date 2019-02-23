@@ -1,5 +1,5 @@
 <template>
-        <div id="app">
+        <div :style="{backgroundImage: background}" id="app">
             <template>
                 <transition name="fade">
                     <div v-if="bgShow" :style="{backgroundImage: background}" class="app_bg"></div>
@@ -472,6 +472,13 @@ export default {
         });
       }
     },
+    electron_open_setting() {
+      this.$electron.ipcRenderer.on('open_system_setting', (event, progressObj) => {
+        if (this.$route.path != '/setting/index') {
+          this.$router.push({ path: '/setting/index' });
+        }
+      })
+    },
 
     jplayer_init() {
       $('#player').jPlayer({
@@ -590,6 +597,7 @@ export default {
     this.jplayer_init();
     this.jplayer_change_volume_handler(0.5);
     this.electron_update_init();
+    this.electron_open_setting();
   },
   watch: {
     '$route': 'routeCg'

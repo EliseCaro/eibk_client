@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../vue/iview.css">
+    <script type="text/javascript" src="../vue/vue.min.js"></script>
+    <script type="text/javascript" src="../vue/iview.min.js"></script>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        i{
+            cursor: pointer;
+        }
+        .app{
+            width: 210px;
+            height: 150px;
+        }
+        .controller{
+            height: 70px;
+            width: 100%;
+            padding: 10px;
+            border-bottom: 1px solid #ccc ;
+        }
+        .controller_icon{
+            float: left;
+            border:2px solid #929292;
+            border-radius: 50%;
+            text-align: center;
+            color: #929292;
+        }
+        .controller_icon:nth-child(1),.controller_icon:nth-child(3){
+            width: 30px;
+            height: 30px;
+            margin-left: 15px;
+            margin-top: 10px;
+            font-size: 19px;
+            line-height: 23px;
+
+        }
+        .controller_icon:nth-child(3){
+            padding-left: 1px;
+        }
+        .controller_icon:nth-child(1){
+            margin-right: 15px;
+            padding-right: 1px;
+        }
+        .controller_icon:nth-child(2){
+            width: 40px;
+            height: 40px;
+            font-size: 30px;
+            line-height: 33px;
+            /*padding-left: 5px;*/
+            margin-top: 4px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .setting,.close{
+            border-bottom: 1px solid #ccc ;
+            line-height: 40px;
+            color:#545454 ;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .close{
+            border-bottom: 0;
+        }
+        .list_{
+            position: relative;
+            padding-left: 43px;
+        }
+        .list_ i{
+            display: block;
+            position: absolute;
+            left: 15px;
+            top:9px;
+            font-size: 21px;
+        }
+        .close i{
+            font-size: 20px;
+            top:10px;
+        }
+    </style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="controller">
+      <div class="controller_icon">
+          <Icon type="ios-skip-backward" />
+      </div>
+      <div class="controller_icon">
+          <Icon type="ios-pause" />
+      </div>
+      <div class="controller_icon">
+          <Icon type="ios-skip-forward" />
+      </div>
+  </div>
+    <div @click="setting()" class="setting list_">
+        <Icon type="ios-settings" ></Icon> 系统设置
+    </div>
+    <div @click="close()" class="close list_">
+        <Icon type="md-close-circle" ></Icon> 关闭系统
+    </div>
+</div>
+<script>
+const {ipcRenderer} = require('electron');
+new Vue({
+  el: '#app',
+  data: {},
+  methods: {
+    close: function () { ipcRenderer.send('close_system', 'true') },
+    setting: function () { ipcRenderer.send('open_system_setting', 'true') }
+  }
+})
+</script>
+</body>
+</html>

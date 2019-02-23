@@ -4,12 +4,13 @@
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
-import { app, BrowserWindow, ipcMain, Menu, Tray, nativeImage } from 'electron';
+import { app, BrowserWindow, ipcMain, Tray, nativeImage } from 'electron';
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 var appTray = null;
 let mainWindow;
+let newWin;
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`;
@@ -32,6 +33,7 @@ function createWindow() {
   });
   mainWindow.setMenuBarVisibility(false);
   mainWindow.loadURL(winURL);
+  mainWindow.closeDevTools();
 
   mainWindow.on('closed', (event) => {
     mainWindow = null;
@@ -40,20 +42,34 @@ function createWindow() {
     mainWindow.hide();
     event.preventDefault();
   });
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: '退出',
-      click: function () {
-        mainWindow.destroy();
-      }
-    }
-  ]);
+
   appTray = new Tray(nativeImage.createFromPath(__static + '/img/icon.ico'));
   appTray.setToolTip('贝壳云笔记');
-  appTray.setContextMenu(contextMenu);
   appTray.on('click', function() {
     mainWindow.show();
   });
+
+  appTray.on('right-click', function(e, b) {
+    if (!newWin) {
+      newWin = new BrowserWindow({
+        width: 210,
+        height: 151,
+        x: b.x + 20,
+        y: b.y - 158,
+        frame: false,
+        resizable: false,
+        parent: mainWindow,
+        devTools: false
+      });
+      newWin.loadURL(__static + `/html/setting.html`); // new.html是新开窗口的渲染进程
+    } else {
+      newWin.show();
+    }
+    newWin.on('closed', () => { newWin = null; });
+    newWin.on('blur', () => { newWin.hide(); });
+    newWin.closeDevTools();
+  });
+
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
   })
@@ -69,6 +85,15 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+ipcMain.on('close_system', () => {
+  mainWindow.destroy();
+});
+
+ipcMain.on('open_system_setting', () => {
+  mainWindow.show();
+  mainWindow.webContents.send('open_system_setting', 'true')
 });
 
 /**

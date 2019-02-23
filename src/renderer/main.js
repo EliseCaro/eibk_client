@@ -19,7 +19,6 @@ Vue.prototype.$formatDate = formatDate;
 Vue.prototype.$onError = onError;
 Vue.config.productionTip = false;
 
-console.log(store.state.login.token);
 // 定义全局变量
 Vue.use(iView);
 router.beforeEach((to, from, next) => {

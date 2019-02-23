@@ -1,12 +1,13 @@
 {
   "name": "eibk",
   "productName": "eibk",
-  "version": "1.1.4",
+  "version": "1.1.6",
   "author": "Yang☆YongFei",
   "description": "贝壳云笔记",
   "license": "",
   "main": "./dist/electron/main.js",
   "scripts": {
+    "build:w32": "cross-env BUILD_TARGET=win32 node .electron-vue/build.js",
     "build": "node .electron-vue/build.js",
     "build:darwin": "cross-env BUILD_TARGET=darwin node .electron-vue/build.js",
     "build:linux": "cross-env BUILD_TARGET=linux node .electron-vue/build.js",
