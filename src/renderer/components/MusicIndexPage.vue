@@ -216,7 +216,11 @@
             this.$store.commit('music_update_items', response.data._list.items);
             if (!this.$store.state.music.play_status.is_play) {
               this.$emit('jplayer_start', this.$store.state.music.list.items[0]);
-              this.$emit('jplayer_play_pause', 'pause');
+              if (this.$route.query.true_play === 1) {
+                this.$router.back(-1);
+              } else {
+                this.$emit('jplayer_play_pause', 'pause');
+              }
             }
           }
         });

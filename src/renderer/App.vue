@@ -479,6 +479,40 @@ export default {
         }
       })
     },
+    electron_play_system_controller() {
+      this.$electron.ipcRenderer.on('play_system_controller', (event, progressObj) => {
+        if (this.$store.state.login.token === '') {
+          this.$electron.ipcRenderer.send('main_window', 'show');
+          return false;
+        }
+        switch (progressObj) {
+          case 'pause':
+            this.jplayer_play_pause('pause');
+            break;
+          case 'play':
+            if (this.$store.state.music.item && this.$store.state.music.item.id) {
+              this.jplayer_play_pause('paly');
+            } else {
+              this.$electron.ipcRenderer.send('play_system_controller', 'next');
+            }
+            break;
+          case 'next':
+            if (this.$store.state.music.play_status.is_play || this.$route.path === '/music/index') {
+              this.jplayer_next('next');
+            } else {
+              this.$router.push({ path: '/music/index', query: {true_play: 1} });
+            }
+            break;
+          case 'last':
+            if (this.$store.state.music.play_status.is_play || this.$route.path === '/music/index') {
+              this.jplayer_next('prev');
+            } else {
+              this.$router.push({ path: '/music/index', query: {true_play: 1} });
+            }
+            break;
+        }
+      });
+    },
 
     jplayer_init() {
       $('#player').jPlayer({
@@ -494,6 +528,7 @@ export default {
       });
       $('#player').bind($.jPlayer.event.ended, (e) => {
         this.$store.commit('music_update_is_play', false);
+        this.$electron.ipcRenderer.send('electron_play_interception_setting', false);
         if (this.$store.state.music.play_status.repeat_type === 'random') {
           let index = this.jplayer_find_music_index(this.$store.state.music.item);
           let randomIndex = randomRange(0, this.$store.state.music.list.items.length - 1);
@@ -514,6 +549,7 @@ export default {
       }).jPlayer('play');
       this.$store.commit('music_update_item', item);
       this.$store.commit('music_update_is_play', true);
+      this.$electron.ipcRenderer.send('electron_play_interception_setting', true);
       const background = 'url(' + this.$ProcessingPic(item.cover, '?imageMogr2/thumbnail/1280x/gravity/Center/crop/200x200/blur/20x10') + ')';
       this.change_background(background);
     },
@@ -538,6 +574,7 @@ export default {
         $('#player').jPlayer('play');
       }
       this.$store.commit('music_update_is_play', !this.$store.state.music.play_status.is_play);
+      this.$electron.ipcRenderer.send('electron_play_interception_setting', this.$store.state.music.play_status.is_play);
     },
     jplayer_format_time(time) {
       time = Math.floor(time);
@@ -555,6 +592,7 @@ export default {
       let duration = this.$store.state.music.play_status.duration;
       $('#player').jPlayer('play', duration * progress);
       this.$store.commit('music_update_is_play', true);
+      this.$electron.ipcRenderer.send('electron_play_interception_setting', true);
     },
     jplayer_change_volume_handler_child(e) {
       let progressBar = this.$el.querySelector('.volume-high-progress');
@@ -598,6 +636,7 @@ export default {
     this.jplayer_change_volume_handler(0.5);
     this.electron_update_init();
     this.electron_open_setting();
+    this.electron_play_system_controller();
   },
   watch: {
     '$route': 'routeCg'

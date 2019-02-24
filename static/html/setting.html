@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../vue/iview.css">
-    <script type="text/javascript" src="../vue/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script type="text/javascript" src="../vue/iview.min.js"></script>
     <style>
         *{
@@ -86,13 +86,19 @@
 <body>
 <div class="app" id="app">
   <div class="controller">
-      <div class="controller_icon">
-          <Icon type="ios-skip-backward" />
+
+      <div @click="playController('last')" class="controller_icon">
+          <Icon type="ios-skip-backward" ></Icon>
       </div>
-      <div class="controller_icon">
+
+      <div v-if="is_play" @click="playController('pause')" class="controller_icon">
           <Icon type="ios-pause" />
       </div>
-      <div class="controller_icon">
+      <div v-else style="padding-left: 5px;line-height: 32px;" @click="playController('play')" class="controller_icon">
+          <Icon style="font-size: 25px" type="md-play" ></Icon>
+      </div>
+
+      <div @click="playController('next')" class="controller_icon">
           <Icon type="ios-skip-forward" />
       </div>
   </div>
@@ -107,10 +113,19 @@
 const {ipcRenderer} = require('electron');
 new Vue({
   el: '#app',
-  data: {},
+  data: function () {
+    return {
+      is_play: false
+    }
+  },
   methods: {
     close: function () { ipcRenderer.send('close_system', 'true') },
-    setting: function () { ipcRenderer.send('open_system_setting', 'true') }
+    setting: function () { ipcRenderer.send('open_system_setting', 'true') },
+    playController: function (str) { ipcRenderer.send('play_system_controller', str); },
+    electron_play_interception() { const o = this; ipcRenderer.on('electron_play_interception', (event, progressObj) => { o.is_play = progressObj; }) }
+  },
+  mounted: function () {
+    this.electron_play_interception();
   }
 })
 </script>

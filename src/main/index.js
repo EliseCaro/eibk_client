@@ -91,9 +91,25 @@ ipcMain.on('close_system', () => {
   mainWindow.destroy();
 });
 
+ipcMain.on('main_window', (evt, args) => {
+  if (args === 'show') {
+    mainWindow.show();
+  } else {
+    mainWindow.hide();
+  }
+});
+
 ipcMain.on('open_system_setting', () => {
   mainWindow.show();
   mainWindow.webContents.send('open_system_setting', 'true')
+});
+
+ipcMain.on('play_system_controller', (evt, args) => {
+  mainWindow.webContents.send('play_system_controller', args)
+});
+
+ipcMain.on('electron_play_interception_setting', (evt, args) => {
+  newWin.webContents.send('electron_play_interception', args)
 });
 
 /**
