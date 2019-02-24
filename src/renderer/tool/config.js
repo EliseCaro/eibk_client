@@ -1,4 +1,4 @@
 export default {
-  host: 'http://api.bkybj.com',
-  qiniuPath: 'http://static.bkybj.com/'
+  host: 'http://api.xxxxx.com',
+  qiniuPath: 'http://static.xxxxx.com/'
 }
