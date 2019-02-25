@@ -109,7 +109,9 @@ ipcMain.on('play_system_controller', (evt, args) => {
 });
 
 ipcMain.on('electron_play_interception_setting', (evt, args) => {
-  newWin.webContents.send('electron_play_interception', args)
+  if (newWin) {
+    newWin.webContents.send('electron_play_interception', args)
+  }
 });
 
 /**
