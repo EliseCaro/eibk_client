@@ -194,8 +194,8 @@
   }
   .browse_edit_center_modal_body{
     max-height: 650px;
-    overflow: scroll;
-    overflow-x: hidden;
+    max-width: 960px;
+    overflow: hidden;
     position: relative;
     .browse_edit_center_modal_btn{
       position: absolute;

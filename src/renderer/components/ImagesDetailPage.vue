@@ -51,8 +51,8 @@
                                 class-name="browse_edit_center_modal"
                                 :closable="false"
                         >
-                            <div class="browse_edit_center_modal_body">
-                                <img :src="$ProcessingPic(browse_data.ts_obj.path)"/>
+                            <div class="browse_edit_center_modal_body" :style="{width:browse_data.width,height: browse_data.height}">
+                                <img style="width: 100%;height: 100%" :src="$ProcessingPic(browse_data.ts_obj.path)"/>
                                 <div class="browse_edit_center_modal_btn">
                                     <Icon class="l" v-if="browse_data.pv_obj != false" @click.native="browse(browse_data.pv_obj)" type="ios-arrow-left"></Icon>
                                     <Icon class="r" v-if="browse_data.nx_obj != false" @click.native="browse(browse_data.nx_obj)" type="ios-arrow-right"></Icon>
@@ -109,7 +109,7 @@
 
 <script>
   import '../../../static/css/images/detail.scss'
-  import {NoticeWarning, NoticeInfo} from '../tool/function';
+  import {NoticeWarning, NoticeInfo, getImg, ProcessingPic} from '../tool/function';
   import { Modal } from 'iview';
   export default {
     name: 'images-detail-page',
@@ -120,7 +120,7 @@
         edit_Images_Box_modal: false,
         up_config: {data: {}, action: ''},
         browse_Box_modal: false,
-        browse_data: {pv_obj: false, ts_obj: false, nx_obj: false},
+        browse_data: {pv_obj: false, ts_obj: false, nx_obj: false, width: '960px', height: '650px'},
         edit_status_list: [{value: '1', label: '公开'}, {value: '0', label: '私有'}]
       }
     },
@@ -140,12 +140,18 @@
         });
       },
       browse(k) {
-        this.browse_data = {
-          pv_obj: this.$store.state.images.detail.items[k - 1] ? k - 1 : false,
-          ts_obj: this.$store.state.images.detail.items[k],
-          nx_obj: this.$store.state.images.detail.items[k + 1] ? k + 1 : false
-        };
-        this.browse_Box_modal = true;
+        let c = this.$store.state.images.detail.items[k].path;
+        const o = this;
+        getImg(ProcessingPic(c), 960, 650, function (w) {
+          o.browse_data = {
+            pv_obj: o.$store.state.images.detail.items[k - 1] ? k - 1 : false,
+            ts_obj: o.$store.state.images.detail.items[k],
+            nx_obj: o.$store.state.images.detail.items[k + 1] ? k + 1 : false,
+            height: w.height + 'px',
+            width: w.width + 'px'
+          };
+          o.browse_Box_modal = true;
+        });
       },
       deleteImg(id) {
         Modal.confirm({
