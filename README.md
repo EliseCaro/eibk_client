@@ -42,7 +42,7 @@ https://github.com/Beatrice950201/eibk_service
 
 ### UI
 
-![](http://qqsa18zl7.hn-bkt.clouddn.com/001.png)
+![](http://qqsa18zl7.hn-bkt.clouddn.com/001.png?imageView2/2/w/1012/h/632)
 ![](http://qqsa18zl7.hn-bkt.clouddn.com/002.png)
 ![](http://qqsa18zl7.hn-bkt.clouddn.com/003.png)
 ![](http://qqsa18zl7.hn-bkt.clouddn.com/004.png)
