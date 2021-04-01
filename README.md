@@ -2,7 +2,7 @@
 
 > 一个基于 electron-vue 开发的云储存平台
 
-##### 运行
+### 运行
 
 ``` bash
 git clone https://github.com/Beatrice950201/eibk_client.git
@@ -21,7 +21,7 @@ npm run build
 
 ```
 
-##### 体验
+### 体验
 
 ``` bash
 # 已经打包的安装包下载地址：http://bkybj.com;
@@ -34,9 +34,9 @@ npm run build
 
 ```
 
-##### 服务端PHP代码
+### 服务端PHP代码
 
-[点击跳转](https://github.com/Beatrice950201/eibk_service)
+[https://github.com/Beatrice950201/eibk_service](https://github.com/Beatrice950201/eibk_service)
 
 
 ### UI
