@@ -37,7 +37,7 @@ npm run build
 ##### 服务端PHP代码
 
 ``` bash
-https://github.com/Beatrice950201/eibk_service
+[!点击跳转](https://github.com/Beatrice950201/eibk_service)
 ```
 
 ### UI
