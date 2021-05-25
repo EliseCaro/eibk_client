@@ -221,5 +221,4 @@
       this.init();
     }
   }
-
 </script>

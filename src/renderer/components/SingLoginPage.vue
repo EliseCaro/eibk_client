@@ -50,28 +50,28 @@
       login() {
         let o = this;
         this.$post('/sing/login', o._data._input)
-        .then((response) => {
-          if (response.status === true) {
-            this.$store.commit('login_update_token', response.data.token);
-            this.$emit('userInfo');
-            this.$router.push({name: 'IndexPage'});
-          } else {
-            NoticeWarning(response.msg);
-          }
-        });
+          .then((response) => {
+            if (response.status === true) {
+              this.$store.commit('login_update_token', response.data.token);
+              this.$emit('userInfo');
+              this.$router.push({name: 'IndexPage'});
+            } else {
+              NoticeWarning(response.msg);
+            }
+          });
       },
       onblur: function () {
         let o = this;
         this.$post('/sing/getAvatar', {
           username: o._data._input.username
         })
-        .then((response) => {
-          if (response.status === true) {
-            o.$store.commit('login_update_avatar', response.data.avatar);
-          } else {
-            o.$store.commit('login_update_avatar', require('../assets/default_user.jpg'));
-          }
-        })
+          .then((response) => {
+            if (response.status === true) {
+              o.$store.commit('login_update_avatar', response.data.avatar);
+            } else {
+              o.$store.commit('login_update_avatar', require('../assets/default_user.jpg'));
+            }
+          })
       }
     },
     mounted() {

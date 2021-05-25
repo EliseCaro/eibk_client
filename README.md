@@ -5,6 +5,8 @@
 ### 运行
 
 ``` bash
+node -v : v12.18.2
+
 git clone https://github.com/Beatrice950201/eibk_client.git
 
 cd eibk_client

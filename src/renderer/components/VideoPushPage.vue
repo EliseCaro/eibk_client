@@ -125,16 +125,16 @@
       methods: {
         init() {
           this.$post('/video/index', {})
-              .then((response) => {
-                if (response.status === true) {
-                  this._data.up_config.format = response.data.up_config.file_accept;
-                  this._data.up_config.action = response.data.up_config.up_path;
-                  this._data.up_config.data = {token: response.data.up_config.qiniu_token};
-                  this._data.up_config._accept_text = response.data.up_config._accept_text;
-                  this.$store.commit('video_update_up_config', response.data.up_config);
-                  this.$store.commit('video_update_lists', response.data.up_list);
-                }
-              });
+            .then((response) => {
+              if (response.status === true) {
+                this._data.up_config.format = response.data.up_config.file_accept;
+                this._data.up_config.action = response.data.up_config.up_path;
+                this._data.up_config.data = {token: response.data.up_config.qiniu_token};
+                this._data.up_config._accept_text = response.data.up_config._accept_text;
+                this.$store.commit('video_update_up_config', response.data.up_config);
+                this.$store.commit('video_update_lists', response.data.up_list);
+              }
+            });
         },
         submit() {
           let data = this._data.up_input;
@@ -166,5 +166,4 @@
         this.init();
       }
     }
-
 </script>

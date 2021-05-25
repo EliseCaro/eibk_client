@@ -5,7 +5,7 @@ let download = {
  * msg
  */
   message: '',
-/**
+  /**
  * 初始化
  * @param path
  * @returns {boolean}
@@ -18,7 +18,7 @@ let download = {
     ipcRenderer.send('download', { 'path': path, 'savePath': this.savePath() });
     ipcRenderer.on('dwo', function(event, arg) {
       console.log(arg);
-/*      if (arg) {
+      /*      if (arg) {
         switch (arg.Type) {
           case 'updated':
             dowload.updated(arg);
@@ -30,7 +30,7 @@ let download = {
       } */
     });
   },
-/**
+  /**
  * 下载中处理
  */
   updated: function (o) {
@@ -48,7 +48,7 @@ let download = {
       }
     });
   },
-/**
+  /**
  * 下载完成或失败处理
  */
   done: function (o) {
@@ -64,7 +64,7 @@ let download = {
       }
     });
   },
-/**
+  /**
  * 获取保存路径
  */
   savePath: function () {
@@ -83,26 +83,26 @@ let download = {
       return savePath;
     }
   },
-/**
+  /**
  * 暂停下载
  */
   pause: function(ETag) {
     ipcRenderer.send('download_pause', {'ETag': ETag});
   },
-/**
+  /**
  * 恢复暂停的下载
  */
   resume: function (ETag) {
     ipcRenderer.send('download_resume', {'ETag': ETag});
   },
-/**
+  /**
  * 取消下载不可恢复
  */
   cancel: function (ETag) {
     console.log('download_cancel');
     ipcRenderer.send('download_cancel', {'ETag': ETag});
   },
-/**
+  /**
 * 读取文件夹
 */
   readdir: function (path) {

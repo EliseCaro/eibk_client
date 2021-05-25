@@ -382,12 +382,12 @@ export default {
         if (json.done === 'completed') {
           // NoticeInfo('下载完成', '您的' + json.name + '下载已经完成！请打开下载列表查看！！！');
           this.$db.download.update(
-          {name: json.name},
-          {$set: json},
-          {},
-          function() {
-            o.electron_dowload_list();
-          });
+            {name: json.name},
+            {$set: json},
+            {},
+            function() {
+              o.electron_dowload_list();
+            });
           o.isCollapsed = false;
         }
       });

@@ -69,7 +69,7 @@
                     timeDivider: true,
                     durationDisplay: true,
                     remainingTimeDisplay: false,
-                    fullscreenToggle: true  // 全屏按钮
+                    fullscreenToggle: true // 全屏按钮
                   }
                 };
                 this.$emit('change_background', 'url(' + ProcessingPic(o.$store.state.video.detail.info.thumb, '?imageMogr2/blur/20x10') + ')');

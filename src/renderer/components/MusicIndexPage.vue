@@ -231,5 +231,4 @@
       this.app.music_mini = false
     }
   }
-
 </script>

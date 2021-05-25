@@ -202,5 +202,4 @@
       this.init();
     }
   }
-
 </script>
