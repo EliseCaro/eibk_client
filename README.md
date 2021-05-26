@@ -43,16 +43,16 @@ npm run build
 
 ### UI
 
-![](http://qqsa18zl7.hn-bkt.clouddn.com/001.png?imageView2/2/w/1012)
-![](http://qqsa18zl7.hn-bkt.clouddn.com/004.png?imageView2/2/w/1012)
-![](http://qqsa18zl7.hn-bkt.clouddn.com/005.png?imageView2/2/w/1012)
-![](http://qqsa18zl7.hn-bkt.clouddn.com/006.png?imageView2/2/w/1012)
-![](http://qqsa18zl7.hn-bkt.clouddn.com/007.png?imageView2/2/w/1012)
-![](http://qqsa18zl7.hn-bkt.clouddn.com/008.png?imageView2/2/w/1012)
-![](http://qqsa18zl7.hn-bkt.clouddn.com/009.png?imageView2/2/w/1012)
-![](http://qqsa18zl7.hn-bkt.clouddn.com/011.png?imageView2/2/w/1012)
-![](http://qqsa18zl7.hn-bkt.clouddn.com/013.png?imageView2/2/w/1012)
-![](http://qqsa18zl7.hn-bkt.clouddn.com/014.png?imageView2/2/w/1012)
+![](http://preview.bkybj.com/001.png?imageView2/2/w/1012)
+![](http://preview.bkybj.com/004.png?imageView2/2/w/1012)
+![](http://preview.bkybj.com/005.png?imageView2/2/w/1012)
+![](http://preview.bkybj.com/006.png?imageView2/2/w/1012)
+![](http://preview.bkybj.com/007.png?imageView2/2/w/1012)
+![](http://preview.bkybj.com/008.png?imageView2/2/w/1012)
+![](http://preview.bkybj.com/009.png?imageView2/2/w/1012)
+![](http://preview.bkybj.com/011.png?imageView2/2/w/1012)
+![](http://preview.bkybj.com/013.png?imageView2/2/w/1012)
+![](http://preview.bkybj.com/014.png?imageView2/2/w/1012)
 
 ### 联系本人
 
