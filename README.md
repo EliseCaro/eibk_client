@@ -7,7 +7,7 @@
 ``` bash
 node -v : v12.18.2
 
-git clone https://github.com/Beatrice950201/eibk_client.git
+git clone https://github.com/EliseCaro/eibk_client.git
 
 cd eibk_client
 
@@ -38,7 +38,7 @@ npm run build
 
 ### 服务端PHP代码
 
-[https://github.com/EliseCaro/eibk_service](https://github.com/Beatrice950201/eibk_service)
+[https://github.com/EliseCaro/eibk_service](https://github.com/EliseCaro/eibk_service)
 
 
 ### UI
