@@ -26,7 +26,7 @@ npm run build
 ### 体验
 
 ``` bash
-# 已经打包的安装包下载地址：http://bkybj.com;
+# 已经打包的安装包下载地址：http://preview.bkybj.com/%E8%B4%9D%E5%A3%B3%E4%BA%91%E7%AC%94%E8%AE%B0.exe;
 
 # 请勿删除内容
 
