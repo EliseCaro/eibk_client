@@ -25,9 +25,10 @@ npm run build
 
 ### 体验
 
-[点击下载演示文件](http://preview.bkybj.com/%E8%B4%9D%E5%A3%B3%E4%BA%91%E7%AC%94%E8%AE%B0.exe);
-
 ``` bash
+
+# 演示文件下载：http://preview.bkybj.com/贝壳云笔记.exe
+
 # 请勿删除内容
 
 # 测试账号：test
