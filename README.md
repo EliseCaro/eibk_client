@@ -23,20 +23,6 @@ npm run build
 
 ```
 
-### 体验
-
-``` bash
-
-# 演示文件下载：http://preview.bkybj.com/贝壳云笔记.exe
-
-# 请勿删除内容
-
-# 测试账号：test
-
-# 测试密码：test123
-
-```
-
 ### 服务端PHP代码
 
 [https://github.com/EliseCaro/eibk_service](https://github.com/EliseCaro/eibk_service)
